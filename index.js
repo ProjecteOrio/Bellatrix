@@ -8,7 +8,8 @@ io.on('connection', (connection) => {
   console.log('['+connection.id+']' + ' new-connection');
 
   connection.on('disconnect', function() {
-    io.emit('broadcast', {user: 'meh', event: 'left'});
+    let from = connection.eventNames || 'dummy_'+connection.id;
+    io.emit('broadcast', {user: from, event: 'left'});
   });
 
   connection.on('user-connect', function (name) {
