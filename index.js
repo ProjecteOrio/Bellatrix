@@ -8,7 +8,7 @@ io.on('connection', (connection) => {
   console.log('['+connection.id+']' + ' new-connection');
 
   connection.on('disconnect', function() {
-    //io.emit('broadcast', {user: name, event: 'left'});
+    io.emit('broadcast', {user: 'meh', event: 'left'});
   });
 
   connection.on('user-connect', function (name) {
@@ -19,8 +19,9 @@ io.on('connection', (connection) => {
 
   connection.on('add-message', (message) => {
     console.log('['+connection.id+']' + ' add-message: ', message);
+    let from = connection.eventNames || 'dummy_'+connection.id;
     io.emit('message', {text: message.text,
-                        from: connection.eventNames,
+                        from: from,
                         created: new Date() });
   });
 
